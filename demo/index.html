@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Demo application: Frontend Engineer at Northwind</title>
+  <style>
+    :root { --bg: #f8fafc; --surface: #fff; --text: #0f172a; --muted: #64748b; --border: #e2e8f0; --accent: #0f766e; }
+    @media (prefers-color-scheme: dark) {
+      :root { --bg: #0b1120; --surface: #0f172a; --text: #e2e8f0; --muted: #94a3b8; --border: #1e293b; --accent: #14b8a6; }
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--bg); color: var(--text); font: 15px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    main { max-width: 720px; margin: 0 auto; padding: 32px 16px 80px; }
+    .banner { padding: 10px 14px; border-radius: 10px; background: #fef3c7; color: #78350f; margin-bottom: 20px; }
+    h1 { margin: 0 0 4px; }
+    .lead { color: var(--muted); margin: 0 0 24px; }
+    section { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 18px; margin-bottom: 18px; }
+    h2 { margin: 0 0 12px; font-size: 17px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 14px; }
+    .field label, legend { display: block; font-weight: 600; margin-bottom: 4px; }
+    input[type="text"], input[type="email"], input[type="tel"], input[type="url"], select, textarea {
+      width: 100%; padding: 9px 10px; border: 1px solid var(--border); border-radius: 8px; background: var(--bg); color: var(--text); font: inherit;
+    }
+    fieldset { border: 0; padding: 0; margin: 0 0 14px; }
+    .options label { font-weight: 400; display: flex; gap: 8px; align-items: center; margin: 4px 0; }
+    button { background: var(--accent); color: #fff; border: 0; border-radius: 8px; padding: 12px 22px; font: inherit; font-weight: 600; cursor: pointer; }
+    #submitted { display: none; padding: 14px; border-radius: 10px; background: #dcfce7; color: #14532d; margin-top: 16px; }
+  </style>
+</head>
+<body>
+  <main>
+    <p class="banner">Demo page for trying ApplyPilot. Nothing here is sent anywhere.</p>
+    <h1>Frontend Engineer</h1>
+    <p class="lead">Northwind Labs · London (hybrid) · We build tools that help small clinics run their day.</p>
+
+    <form id="application">
+      <section>
+        <h2>About you</h2>
+        <div class="grid">
+          <div class="field"><label for="fname">First name *</label><input id="fname" name="first_name" type="text" required></div>
+          <div class="field"><label for="lname">Last name *</label><input id="lname" name="last_name" type="text" required></div>
+          <div class="field"><label for="email">Email address *</label><input id="email" name="email" type="email" required></div>
+          <div class="field"><label for="phone">Phone</label><input id="phone" name="phone" type="tel"></div>
+          <div class="field"><label for="city">Town / City</label><input id="city" name="city" type="text"></div>
+          <div class="field">
+            <label for="country">Country</label>
+            <select id="country" name="country">
+              <option value="">Select a country</option>
+              <option value="NG">Nigeria</option>
+              <option value="GB">United Kingdom</option>
+              <option value="IE">Ireland</option>
+              <option value="US">United States of America</option>
+            </select>
+          </div>
+          <div class="field"><label for="li">LinkedIn profile</label><input id="li" name="linkedin" type="url"></div>
+          <div class="field"><label for="site">Portfolio or website</label><input id="site" name="website" type="url"></div>
+        </div>
+      </section>
+
+      <section>
+        <h2>Experience</h2>
+        <div class="grid">
+          <div class="field"><label for="title">Current job title</label><input id="title" name="title" type="text"></div>
+          <div class="field"><label for="company">Current employer</label><input id="company" name="company" type="text"></div>
+          <div class="field"><label for="years">Years of professional experience</label><input id="years" name="years" type="text"></div>
+          <div class="field"><label for="salary">Desired salary</label><input id="salary" name="salary" type="text"></div>
+        </div>
+        <div class="field" style="margin-top:14px"><label for="cv">Resume / CV *</label><input id="cv" name="cv" type="file" required></div>
+      </section>
+
+      <section>
+        <h2>Eligibility</h2>
+        <fieldset>
+          <legend>Are you legally authorized to work in the United Kingdom? *</legend>
+          <div class="options">
+            <label><input type="radio" name="auth" value="1"> Yes</label>
+            <label><input type="radio" name="auth" value="0"> No</label>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend>Will you now or in the future require visa sponsorship?</legend>
+          <div class="options">
+            <label><input type="radio" name="sponsor" value="1"> Yes</label>
+            <label><input type="radio" name="sponsor" value="0"> No</label>
+          </div>
+        </fieldset>
+      </section>
+
+      <section>
+        <h2>A few questions</h2>
+        <div class="field"><label for="why">Why do you want to work at Northwind?</label><textarea id="why" name="why" rows="4" maxlength="1000"></textarea></div>
+        <div class="field" style="margin-top:14px"><label for="proud">Tell us about a frontend project you are proud of.</label><textarea id="proud" name="proud" rows="4"></textarea></div>
+      </section>
+
+      <section>
+        <h2>Equal opportunities (optional)</h2>
+        <div class="grid">
+          <div class="field">
+            <label for="gender">Gender</label>
+            <select id="gender" name="eeo_gender"><option value="">Prefer not to say</option><option>Woman</option><option>Man</option><option>Non-binary</option></select>
+          </div>
+          <div class="field">
+            <label for="ethnicity">Race / ethnicity</label>
+            <select id="ethnicity" name="eeo_race"><option value="">Prefer not to say</option><option>Black or African</option><option>Asian</option><option>White</option><option>Mixed</option></select>
+          </div>
+        </div>
+      </section>
+
+      <label><input type="checkbox" name="consent" required> I agree to Northwind storing my application data.</label>
+      <p><button type="submit">Submit application</button></p>
+      <div id="submitted" role="status">Application submitted. (Demo only, nothing was sent.)</div>
+    </form>
+  </main>
+  <script>
+    document.getElementById('application').addEventListener('submit', (event) => {
+      event.preventDefault();
+      document.getElementById('submitted').style.display = 'block';
+    });
+  </script>
+</body>
+</html>

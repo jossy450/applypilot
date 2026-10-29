@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ApplyPilot settings</title>
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+  <main>
+    <header>
+      <img src="../icons/icon48.png" alt="" width="40" height="40">
+      <div>
+        <h1>ApplyPilot</h1>
+        <p>Your details stay in this browser. ApplyPilot fills forms only when you click it, and never submits without your approval.</p>
+      </div>
+    </header>
+
+    <form id="profile-form">
+      <div id="profile-groups"></div>
+
+      <fieldset>
+        <legend>Resume</legend>
+        <label for="resumeText">Paste your CV as plain text. Used only for AI drafts, and never pasted into forms.</label>
+        <textarea id="resumeText" name="resumeText" rows="10" placeholder="Experience, skills, education…"></textarea>
+      </fieldset>
+
+      <fieldset>
+        <legend>Saved answers</legend>
+        <p class="hint">Answers to questions you see often. ApplyPilot uses one when a form's question is close in wording, and marks it for you to check.</p>
+        <div id="answers"></div>
+        <button type="button" id="add-answer" class="ghost">+ Add a saved answer</button>
+      </fieldset>
+
+      <fieldset>
+        <legend>AI drafting (optional)</legend>
+        <label class="inline"><input type="checkbox" id="aiEnabled"> Draft answers to open questions with Claude</label>
+        <label for="apiKey">Anthropic API key</label>
+        <input type="password" id="apiKey" autocomplete="off" placeholder="sk-ant-…">
+        <p class="hint">Stored only in this browser (<code>chrome.storage.local</code>) and sent only to <code>api.anthropic.com</code>. When you ask for a draft, the question, your profile, your resume text and the job page's text are sent to Claude. Every draft is marked for review.</p>
+      </fieldset>
+
+      <div class="actions">
+        <button type="submit" class="primary">Save</button>
+        <button type="button" id="export" class="ghost">Export</button>
+        <label class="ghost file-button">Import<input type="file" id="import" accept="application/json" hidden></label>
+        <span id="status" role="status"></span>
+      </div>
+    </form>
+  </main>
+
+  <template id="answer-template">
+    <div class="answer">
+      <input type="text" class="question" placeholder="Question, e.g. Why do you want to work here?">
+      <textarea class="answer-text" rows="3" placeholder="Your answer"></textarea>
+      <button type="button" class="remove ghost" aria-label="Remove this saved answer">Remove</button>
+    </div>
+  </template>
+
+  <script src="../src/matcher.js"></script>
+  <script src="options.js"></script>
+</body>
+</html>

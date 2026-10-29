@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>ApplyPilot</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <header>
+    <img src="../icons/icon48.png" alt="" width="28" height="28">
+    <div>
+      <h1>ApplyPilot</h1>
+      <p>Fill, review, then you approve.</p>
+    </div>
+  </header>
+
+  <section id="profile-status" class="card"></section>
+
+  <button id="fill" class="primary">Fill &amp; review this page</button>
+  <p id="result" role="status"></p>
+
+  <footer>
+    <a href="#" id="open-options">Edit profile &amp; settings</a>
+    <span class="shortcut">Alt+Shift+A</span>
+  </footer>
+
+  <script src="../src/matcher.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>
