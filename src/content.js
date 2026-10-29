@@ -28,6 +28,7 @@
     kept: { label: 'Already filled', tone: 'muted' },
     manual: { label: 'Needs you', tone: 'bad' },
     file: { label: 'Upload yourself', tone: 'bad' },
+    attached: { label: 'Attached by you', tone: 'ok' },
     sensitive: { label: 'Left for you', tone: 'private' },
   };
   const ATTENTION = new Set(['manual', 'file', 'sensitive', 'review', 'edited']);
@@ -254,7 +255,7 @@
     pageSheet = new CSSStyleSheet();
     pageSheet.replaceSync(`
       [data-applypilot] { outline-offset: 2px !important; }
-      [data-applypilot="filled"] { outline: 2px solid #16a34a !important; }
+      [data-applypilot="filled"], [data-applypilot="attached"] { outline: 2px solid #16a34a !important; }
       [data-applypilot="review"], [data-applypilot="edited"] { outline: 2px solid #d97706 !important; }
       [data-applypilot="manual"], [data-applypilot="file"] { outline: 2px dashed #dc2626 !important; }
       [data-applypilot="sensitive"] { outline: 2px dashed #7c3aed !important; }
@@ -274,8 +275,14 @@
     const onEdit = () => {
       if (state.filling || !state.items.includes(item)) return;
       const el = item.els.find((e) => e.type !== 'radio' || e.checked) || item.els[0];
-      item.value = item.kind === 'radio' ? optionLabelFor(el) : currentValue(el);
-      item.status = item.value ? 'edited' : 'manual';
+      if (item.kind === 'file') {
+        item.value = el.files && el.files.length ? [...el.files].map((f) => f.name).join(', ') : '';
+        item.status = item.value ? 'attached' : 'file';
+      } else {
+        if (el.type === 'checkbox') item.value = el.checked ? 'Ticked' : '';
+        else item.value = item.kind === 'radio' ? optionLabelFor(el) : currentValue(el);
+        item.status = item.value ? 'edited' : 'manual';
+      }
       mark(item);
       render();
     };
@@ -446,7 +453,7 @@
 
   function rowHtml(item) {
     const status = STATUS[item.status];
-    const canDraft = item.kind === 'question' && state.settings.aiEnabled && ['manual', 'review'].includes(item.status);
+    const canDraft = item.kind === 'question' && state.settings.aiEnabled && !state.approved && ['manual', 'review'].includes(item.status);
     return `
       <button class="row" data-action="focus" data-id="${item.id}">
         <span class="top"><span class="label">${escapeHtml(clip(item.label, 90))}</span>

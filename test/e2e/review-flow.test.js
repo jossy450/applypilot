@@ -128,6 +128,7 @@ test('fills the demo form and holds submission until approved', async () => {
       box.dispatchEvent(new Event('change', { bubbles: true }));
     });
     await page.setInputFiles('#cv', { name: 'cv.pdf', mimeType: 'application/pdf', buffer: Buffer.from('%PDF-1.4') });
+    assert.equal(await mark('#cv'), 'attached');
     await page.check('input[name=consent]');
     await panel.evaluate((root) => root.querySelector('[data-action=approve]').click());
     await page.waitForSelector('#submitted', { state: 'visible' });
